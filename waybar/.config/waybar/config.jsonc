@@ -1,0 +1,194 @@
+{
+    "modules-left": [
+        "clock",
+
+        "temperature",
+        "cpu",
+        "disk",
+        "memory",
+
+        "tray"
+    ],
+    "modules-center": [
+        "hyprland/workspaces",
+    ],
+    "modules-right": [
+        "network",
+        "bluetooth",
+        "pulseaudio",
+        "battery",
+        "custom/power"
+    ],
+
+    "hyprland/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
+    "bluetooth": {
+        "format": "{status} ",
+        "format-on": "on ",
+        "format-connected": "{device_alias} 󰂱",
+        "format-connected-battery": "{device_alias} {device_battery_percentage}% 󰂱",
+        "format-disabled": "Off 󰂲",
+        "format-off": "Off 󰂲",
+        "format-no-controller": "no-controller 󰂲",
+        "tooltip": true,
+        "tooltip-format": "Bluetooth:  {status}",
+        "on-click": "eww open --toggle control-panel --screen $(~/.config/scripts/monitor_focused.sh)",
+        "on-click-right": "blueman-manager"
+    },
+
+    "network": {
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        "format-wifi": "{essid} ({signalStrength}%) {icon}",
+        "format-ethernet": "{ifname} ",
+        "format-disconnected": "Offline ",
+        "max-length": 50,
+        "on-click": "eww open --toggle control-panel --screen $(~/.config/scripts/monitor_focused.sh)",
+        "on-click-right": "alacritty -e 'nmtui'",
+        "tooltip": true,
+        "tooltip-format": "<b>Network: </b>{ifname}{essid}\n{bandwidthDownBytes}  \t{bandwidthUpBytes} ",
+    },
+
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-alt": "{icon}",
+        "format-icons": [
+          "󰂎",
+          "󰁺",
+          "󰁻",
+          "󰁼",
+          "󰁽",
+          "󰁾",
+          "󰁿",
+          "󰂀",
+          "󰂁",
+          "󰂂",
+          "󰁹"
+        ],
+        "format-warning": "{capacity}% {icon}",
+        "format-critical": "{capacity}% {icon}",
+        "format-charging": "{capacity}% 󰂄",
+        "format-full": "{capacity}% 󱟢",
+        "tooltip": true,
+        "tooltip-format": "{time} 󱑂"
+    },
+
+    "temperature": {
+        // path to hwmon to get the temperature
+        "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+        "interval": 5,
+        "warning-threshold": 80,
+        "critical-threshold": 100,
+        "format-warning": "{temperatureC}°C ",
+        "format-critical": "{temperatureC}°C ",
+        "format-icons": ["", "", "", "", ""],
+        "format": "{temperatureC}°C {icon}",
+        "on-click": "psensor",
+        "tooltip": true,
+        //"tooltip-format": "<b>CPU Temperature</b>: {temperatureC}°C {icon}"
+    },
+
+    "cpu": {
+        "format": "{usage}% ",
+        "interval": 5,
+        "on-click": "alacritty -e 'btop'",
+        "tooltip": true
+    },
+
+    "memory": {
+        "format": "{}% \uf1c0",
+        "interval": 5,
+        "on-click": "alacritty -e 'btop'"
+    },
+
+    "disk": {
+        "path": "/",
+        "interval": 60,
+        "format": "{percentage_used}% 󰪶",
+        "unit": "GB",
+        "tooltip": true,
+        "tooltip-format": "Computer Space\nUsed: {used}\nTotal: {total}",
+        "on-click": "nautilus /",
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10,
+        "reverse-direction": true,
+    },
+
+    "clock": {
+        "format": "{:%H:%M} 󰥔",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%d/%m/%Y} ",
+        "on-click-right": "flatpak run org.gnome.Calendar"
+    },
+
+    "pulseaudio": {
+        "format": "{volume}% {icon} ",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": "{volume}% {icon}",
+        "format-muted": "{volume}%  ",
+        "format-source": "{volume}% ",
+        "format-source-muted": "{volume}%  ",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "phone-muted": "",
+            "portable": "",
+            "portable-muted": "",
+            "car": "",
+            "speaker": "󰓃",
+            "speaker-muted": "󰓄",
+            "default": ["", "", ""]
+        },
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "helvum"
+    },
+
+    "custom/power": {
+        "format": " ",
+        "on-click": "wlogout",
+        "tooltip": true,
+        "tooltip-format": "<b>Power Menu</b>"
+    },
+
+    "hyprland/workspaces": {
+        "format-icons": {
+            "active": "",
+            "default": "",
+            "urgent": ""
+        },
+        "persistent-workspaces": {
+            "*": [
+                1, 2, 3, 4, 5
+            ]
+        },
+
+        //"format": "{icon}",
+        //"format-icons": {
+        //    "default": "",
+        //    "active": "",
+        //},
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "tooltip": true,
+        "tooltip-format": "Workspace: {name}"
+    },
+}

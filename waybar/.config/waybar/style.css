@@ -1,0 +1,118 @@
+@define-color bg_main rgba(15, 24, 35, 0.70);
+@define-color bg_module rgba(255, 255, 255, 0.05);
+@define-color bg_hover rgba(88, 65, 84, 0.5);
+@define-color accent #584154;
+@define-color fg_main #e5e7ea;
+@define-color fg_muted #5e6774;
+@define-color alert #bf616a; /* low battery */
+@define-color warning #ebcb8b;
+@define-color success #a3be8c; /* charging battery */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: @bg_main;
+    color: @fg_main;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#network,
+#pulseaudio,
+#bluetooth,
+#tray,
+#custom-power {
+    padding: 0 12px;
+    margin: 6px 4px;
+    border-radius: 12px;
+    background-color: @bg_module;
+    color: @fg_main;
+    transition: all 0.3s ease;
+}
+
+#clock:hover,
+#battery:hover,
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#temperature:hover,
+#network:hover,
+#pulseaudio:hover,
+#bluetooth:hover,
+#custom-power:hover {
+    background-color: @bg_hover;
+    color: #ffffff;
+}
+
+/* ---- Workspaces ---- */
+#workspaces {
+    margin: 6px 8px;
+    padding: 0px 4px;
+    background-color: @bg_module;
+    border-radius: 16px;
+}
+
+#workspaces button {
+    padding: 0 12px;
+    margin: 4px 2px;
+    border-radius: 10px;
+    color: @fg_muted;
+    transition: all 0.3s ease;
+}
+
+#workspaces button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: @fg_main;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+#workspaces button.active {
+    background-color: @accent;
+    color: #ffffff;
+}
+
+#workspaces button.urgent {
+    background-color: @alert;
+    color: #ffffff;
+}
+
+/* ---- Battery ---- */
+#battery.charging {
+    color: @success;
+}
+
+#battery.warning:not(.charging) {
+    background-color: @warning;
+    color: #1a1b26;
+}
+
+#battery.critical:not(.charging) {
+    background-color: @alert;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: @alert;
+    }
+}
