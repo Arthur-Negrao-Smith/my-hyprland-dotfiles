@@ -18,7 +18,7 @@ hl.config({
     },
 
     -- inverts the scroll to follow the fingers movement
-    natural_scroll = true,
+    natural_scroll = false,
     kb_layout = "br,us",
     kb_variant = "abnt2,",
   },
