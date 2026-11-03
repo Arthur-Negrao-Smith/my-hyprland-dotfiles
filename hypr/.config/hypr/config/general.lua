@@ -22,4 +22,8 @@ hl.config({
     kb_layout = "br,us",
     kb_variant = "abnt2,",
   },
+
+  xwayland = {
+    force_zero_scaling = true,
+  },
 })
