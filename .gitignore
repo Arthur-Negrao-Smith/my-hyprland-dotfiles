@@ -1,3 +1,6 @@
 log.txt
 *.jpg
 *.png
+
+# ignore the nvim dir
+nvim/*

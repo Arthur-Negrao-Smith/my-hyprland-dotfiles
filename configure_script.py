@@ -18,6 +18,9 @@ XDG_CONFIG_HOME: str = f"{HOME}/.config"
 ZSH_PATH: str = f"{HOME}/.zshrc"
 ZSH_BIN: str = "/bin/zsh"
 
+# nvim constants
+NVIM_GIT: str = "https://github.com/Arthur-Negrao-Smith/My-nvim-config.git"
+
 # script constants
 SCRIPT_FILE: str = os.path.basename(__file__)
 SCRIPT_PATH: str = __file__
@@ -51,12 +54,12 @@ CONFIG_DIRS: tuple[str, ...] = (
     "waybar",
     "wlogout",
     "zsh",
-    "nvim",
 )
 
 # pacman packages to install
 PACMAN_PACKAGES: tuple[str, ...] = (
     "rofi",
+    "ripgrep",
     "firefox",
     "flatpak",
     "kitty",
@@ -296,6 +299,21 @@ def install_packages(dry_run: bool = True):
     update_system(dry_run=dry_run)
 
 
+def configure_nvim(dry_run: bool = True) -> None:
+    log.info(">>> Configuring the nvim...")
+
+    nvim_path = f"{XDG_CONFIG_HOME}/nvim"
+
+    backup_if_exists(nvim_path, dry_run)
+
+    log.info(">>> Cloning the nvim configs...")
+    run_cmd(
+        "git",
+        "clone",
+        NVIM_GIT,
+    )
+
+
 def install_flatpaks(dry_run: bool = True) -> None:
     log.info(">>> Installing flatpaks...")
     run_cmd("flatpak", "install", "-y", *FLATPAKS)
@@ -348,6 +366,7 @@ def stow_configs(dry_run: bool = True) -> None:
         run_cmd("stow", dir, dry_run=dry_run)
 
     run_cmd("stow", "zsh", dry_run=dry_run)
+    run_cmd("stow", "nvim", dry_run=dry_run)
 
 
 def configure_zsh(dry_run: bool = True) -> None:
@@ -478,6 +497,8 @@ def main(dry_run: bool = True):
     install_packages(dry_run)
 
     install_flatpaks(dry_run)
+
+    configure_nvim(dry_run)
 
     backup_existing_configs(dry_run)
     stow_configs(dry_run)
